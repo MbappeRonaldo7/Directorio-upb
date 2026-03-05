@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Directorio UPB</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+<!-- HEADER tipo oficial -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <img class="upb-logo" src="img/user.jpg" alt="UPB">
+    <nav class="topbar-nav">
+      <a href="#">Inicio</a>
+      <a href="#">Oferta Académica</a>
+      <a href="#">La Universidad</a>
+      <a href="#">Investigación</a>
+      <a href="#">Intercambio</a>
+      <a href="#">Vida Universitaria</a>
+      <a href="#">Proyección Social</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Breadcrumb + Título + descripción (tipo oficial) -->
+<section class="page-header">
+
+  <div class="breadcrumb">
+    <a href="#">Inicio</a> &gt;
+    <a href="#">La Universidad</a> &gt;
+    <span>Directorio</span>
+  </div>
+
+  <h1>Directorio UPB</h1>
+
+  <p class="page-description">
+    Encuentre el talento humano UPB: empleados administrativos, docentes e investigadores
+    que hacen parte de la Universidad Pontificia Bolivariana.
+  </p>
+
+</section>
+
+<!-- BLOQUE SUPERIOR TIPO UPB -->
+<section class="hero">
+  <div class="hero-card">
+
+    <!-- Lista izquierda (como el directorio real) -->
+    <div class="hero-left">
+      <div class="hero-cols">
+        <ul>
+          <li>Investigación</li>
+          <li>Formación continua</li>
+          <li>Pregrados</li>
+          <li>Bienestar Universitario</li>
+          <li>Admisiones</li>
+          <li>Investigador</li>
+          <li>Emprendimiento</li>
+        </ul>
+
+        <ul>
+          <li>Intercambio</li>
+          <li>Vida Universitaria</li>
+          <li>Sobre la U</li>
+          <li>Editorial</li>
+          <li>Colegio</li>
+          <li>Docente</li>
+          <li><a href="#">Pulse para ver más contenidos</a></li>
+        </ul>
+
+        <ul>
+          <li>Centro de lenguas</li>
+          <li>Postgrados</li>
+          <li>Proyección Social</li>
+          <li>Campus</li>
+          <li>Administrativo</li>
+          <li>Egresado</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Buscador derecha -->
+    <div class="hero-right">
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Escriba una palabra clave..." />
+        <button id="btnSearch">Buscar</button>
+      </div>
+
+      <button class="btn-secondary" id="btnReset" type="button">Regresar</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FILTROS (debajo, como en UPB) -->
+<section class="filters-line">
+  <div class="filters-inner">
+    <div class="filters-left">
+      <span id="counter">Mostrando 0 personas</span>
+    </div>
+
+    <div class="filters-right">
+      <label>Subcategoría:</label>
+      <select id="subcatSelect">
+        <option>Todas</option>
+        <option>Docente</option>
+        <option>Administrativo</option>
+        <option>Investigador</option>
+      </select>
+
+      <label>Ciudad:</label>
+      <select id="citySelect">
+        <option>Todas las Seccionales</option>
+        <option>Sede Central Medellín</option>
+        <option>Seccional Bucaramanga</option>
+        <option>Seccional Montería</option>
+        <option>Seccional Palmira</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- BARRA A-Z -->
+<section class="alphabet">
+  <a href="#">A</a><a href="#">B</a><a href="#">C</a><a href="#">D</a><a href="#">E</a><a href="#">F</a>
+  <a href="#">G</a><a href="#">H</a><a href="#">I</a><a href="#">J</a><a href="#">K</a><a href="#">L</a>
+  <a href="#">M</a><a href="#">N</a><a href="#">O</a><a href="#">P</a><a href="#">Q</a><a href="#">R</a>
+  <a href="#">S</a><a href="#">T</a><a href="#">U</a><a href="#">V</a><a href="#">W</a><a href="#">X</a>
+  <a href="#">Y</a><a href="#">Z</a>
+</section>
+
+<!-- RESULTADOS (JS llena esto) -->
+<section class="results" id="results"></section>
+
+<!-- FOOTER institucional -->
+<footer class="footer">
+  <div class="footer-content">
+    <p><b>Universidad Pontificia Bolivariana</b></p>
+    <p>Seccionales: Medellín · Bucaramanga · Montería · Palmira</p>
+    <p>© 2026 Universidad Pontificia Bolivariana</p>
+  </div>
+</footer>
+
+<!-- MODAL DETALLE (debe ir dentro del body) -->
+<div class="modal" id="detailModal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">×</button>
+
+    <h2 id="modalTitle">Detalle</h2>
+
+    <div class="modal-body">
+      <p><b>Nombre:</b> <span id="mNombre"></span></p>
+      <p><b>Ciudad:</b> <span id="mCiudad"></span></p>
+      <p><b>Título:</b> <span id="mCategoria"></span></p>
+      <p><b>Correo:</b> <span id="mCorreo"></span></p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-btn" id="modalOk">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
