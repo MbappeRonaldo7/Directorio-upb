@@ -106,6 +106,8 @@ document.addEventListener("keydown", (e) => {
 
 /* ===== RENDER ===== */
 function render(list) {
+  if (!resultsEl || !counterEl) return;
+
   resultsEl.innerHTML = "";
   counterEl.textContent = `Mostrando ${list.length} personas`;
 
@@ -131,10 +133,12 @@ function render(list) {
     `;
 
     const link = card.querySelector(".name-link");
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      openModal(p);
-    });
+    if (link) {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        openModal(p);
+      });
+    }
 
     resultsEl.appendChild(card);
   });
@@ -142,9 +146,9 @@ function render(list) {
 
 /* ===== FILTROS ===== */
 function applyFilters() {
-  const text = (searchInput.value || "").trim().toLowerCase();
-  const subcat = subcatSelect.value;
-  const city = citySelect.value;
+  const text = (searchInput?.value || "").trim().toLowerCase();
+  const subcat = subcatSelect?.value || "Todas";
+  const city = citySelect?.value || "Todas las Seccionales";
 
   const filtered = people.filter((p) => {
     const okText =
@@ -165,14 +169,15 @@ function applyFilters() {
 }
 
 /* eventos */
-btnSearch.addEventListener("click", applyFilters);
-searchInput.addEventListener("input", applyFilters);
-subcatSelect.addEventListener("change", applyFilters);
-citySelect.addEventListener("change", applyFilters);
-
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") applyFilters();
-});
+if (btnSearch) btnSearch.addEventListener("click", applyFilters);
+if (searchInput) {
+  searchInput.addEventListener("input", applyFilters);
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") applyFilters();
+  });
+}
+if (subcatSelect) subcatSelect.addEventListener("change", applyFilters);
+if (citySelect) citySelect.addEventListener("change", applyFilters);
 
 document.querySelectorAll(".alphabet a").forEach((a) => {
   a.addEventListener("click", (e) => {
@@ -186,16 +191,18 @@ document.querySelectorAll(".alphabet a").forEach((a) => {
   });
 });
 
-btnReset.addEventListener("click", () => {
-  searchInput.value = "";
-  subcatSelect.value = "Todas";
-  citySelect.value = "Todas las Seccionales";
-  selectedLetter = "";
+if (btnReset) {
+  btnReset.addEventListener("click", () => {
+    if (searchInput) searchInput.value = "";
+    if (subcatSelect) subcatSelect.value = "Todas";
+    if (citySelect) citySelect.value = "Todas las Seccionales";
+    selectedLetter = "";
 
-  document.querySelectorAll(".alphabet a").forEach((x) => x.classList.remove("active"));
+    document.querySelectorAll(".alphabet a").forEach((x) => x.classList.remove("active"));
 
-  render(people);
-});
+    render(people);
+  });
+}
 
 /* init */
 render(people);
