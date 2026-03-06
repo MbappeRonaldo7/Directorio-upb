@@ -1,208 +1,191 @@
-const people = [
-  {
-    nombre: "Thomas Angulo",
-    categoria: "Docente",
-    ciudad: "Sede Central Medellín",
-    correo: "thomas.angulo@upb.edu.co",
-    dependencia: "Facultad de Ingeniería de Sistemas",
-    telefono: "+57 300 000 0000",
-    imagen: "thomas.jpg"
-  },
-  {
-    nombre: "Juan Hernandez",
-    categoria: "Investigador",
-    ciudad: "Seccional Bucaramanga",
-    correo: "juan.hernandez@upb.edu.co",
-    dependencia: "Centro de Investigación e Innovación",
-    telefono: "+57 300 000 0000",
-    imagen: "hernandez.jpg"
-  },
-  {
-    nombre: "Juan Felipe",
-    categoria: "Administrativo",
-    ciudad: "Seccional Montería",
-    correo: "juan.calvo@upb.edu.co",
-    dependencia: "Dirección Administrativa",
-    telefono: "+57 300 000 0000",
-    imagen: "juan.jpg"
-  },
-  {
-    nombre: "Santiago Figueroa",
-    categoria: "Docente",
-    ciudad: "Seccional Palmira",
-    correo: "santiago.figueroa@upb.edu.co",
-    dependencia: "Facultad de Ciencias Sociales",
-    telefono: "+57 300 000 0000",
-    imagen: "santiago.jpg"
-  },
-  {
-    nombre: "Sandra Reyes",
-    categoria: "Docente",
-    ciudad: "Seccional Bucaramanga",
-    correo: "sandra.reyes@upb.edu.co",
-    dependencia: "Facultad de Ingeniería de Sistemas",
-    telefono: "+57 300 000 0000",
-    imagen: "sandra.jpg"
-  }
-];
+document.addEventListener("DOMContentLoaded", () => {
+  const people = [
+    {
+      nombre: "Thomas Angulo",
+      categoria: "Docente",
+      ciudad: "Sede Central Medellín",
+      correo: "thomas.angulo@upb.edu.co",
+      dependencia: "Facultad de Ingeniería de Sistemas",
+      telefono: "+57 300 000 0000",
+      imagen: "thomas.jpg"
+    },
+    {
+      nombre: "Juan Hernandez",
+      categoria: "Investigador",
+      ciudad: "Seccional Bucaramanga",
+      correo: "juan.hernandez@upb.edu.co",
+      dependencia: "Centro de Investigación e Innovación",
+      telefono: "+57 300 000 0000",
+      imagen: "hernandez.jpg"
+    },
+    {
+      nombre: "Juan Felipe",
+      categoria: "Administrativo",
+      ciudad: "Seccional Montería",
+      correo: "juan.calvo@upb.edu.co",
+      dependencia: "Dirección Administrativa",
+      telefono: "+57 300 000 0000",
+      imagen: "juan.jpg"
+    },
+    {
+      nombre: "Santiago Figueroa",
+      categoria: "Docente",
+      ciudad: "Seccional Palmira",
+      correo: "santiago.figueroa@upb.edu.co",
+      dependencia: "Facultad de Ciencias Sociales",
+      telefono: "+57 300 000 0000",
+      imagen: "santiago.jpg"
+    },
+    {
+      nombre: "Sandra Reyes",
+      categoria: "Docente",
+      ciudad: "Seccional Bucaramanga",
+      correo: "sandra.reyes@upb.edu.co",
+      dependencia: "Facultad de Ingeniería de Sistemas",
+      telefono: "+57 300 000 0000",
+      imagen: "sandra.jpg"
+    }
+  ];
 
-const resultsEl = document.getElementById("results");
-const counterEl = document.getElementById("counter");
+  const resultsEl = document.getElementById("results");
+  const counterEl = document.getElementById("counter");
 
-const searchInput = document.getElementById("searchInput");
-const btnSearch = document.getElementById("btnSearch");
-const btnReset = document.getElementById("btnReset");
+  const searchInput = document.getElementById("searchInput");
+  const btnSearch = document.getElementById("btnSearch");
+  const btnReset = document.getElementById("btnReset");
 
-const subcatSelect = document.getElementById("subcatSelect");
-const citySelect = document.getElementById("citySelect");
+  const subcatSelect = document.getElementById("subcatSelect");
+  const citySelect = document.getElementById("citySelect");
 
-let selectedLetter = "";
+  const modal = document.getElementById("detailModal");
+  const modalClose = document.getElementById("modalClose");
+  const modalOk = document.getElementById("modalOk");
 
-/* ===== MODAL ===== */
-const modal = document.getElementById("detailModal");
-const modalClose = document.getElementById("modalClose");
-const modalOk = document.getElementById("modalOk");
+  const mNombre = document.getElementById("mNombre");
+  const mCiudad = document.getElementById("mCiudad");
+  const mCategoria = document.getElementById("mCategoria");
+  const mCorreo = document.getElementById("mCorreo");
+  const mDependencia = document.getElementById("mDependencia");
+  const mTelefono = document.getElementById("mTelefono");
 
-const mNombre = document.getElementById("mNombre");
-const mCiudad = document.getElementById("mCiudad");
-const mCategoria = document.getElementById("mCategoria");
-const mCorreo = document.getElementById("mCorreo");
-const mDependencia = document.getElementById("mDependencia");
-const mTelefono = document.getElementById("mTelefono");
+  let selectedLetter = "";
 
-function openModal(persona) {
-  if (mNombre) mNombre.textContent = persona.nombre;
-  if (mCiudad) mCiudad.textContent = persona.ciudad;
-  if (mCategoria) mCategoria.textContent = persona.categoria;
-  if (mCorreo) mCorreo.textContent = persona.correo;
-  if (mDependencia) mDependencia.textContent = persona.dependencia;
-  if (mTelefono) mTelefono.textContent = persona.telefono;
+  function openModal(persona) {
+    mNombre.textContent = persona.nombre;
+    mCiudad.textContent = persona.ciudad;
+    mCategoria.textContent = persona.categoria;
+    mCorreo.textContent = persona.correo;
+    mDependencia.textContent = persona.dependencia;
+    mTelefono.textContent = persona.telefono;
 
-  if (modal) {
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
   }
-}
 
-function closeModal() {
-  if (modal) {
+  function closeModal() {
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
   }
-}
 
-if (modalClose) modalClose.addEventListener("click", closeModal);
-if (modalOk) modalOk.addEventListener("click", closeModal);
+  function render(list) {
+    resultsEl.innerHTML = "";
+    counterEl.textContent = `Mostrando ${list.length} personas`;
 
-if (modal) {
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
-  });
-}
+    if (list.length === 0) {
+      resultsEl.innerHTML = `<p style="color:#6b7280;">No hay resultados.</p>`;
+      return;
+    }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
-});
+    list.forEach((p) => {
+      const card = document.createElement("div");
+      card.className = "card";
 
-/* ===== RENDER ===== */
-function render(list) {
-  if (!resultsEl || !counterEl) return;
+      card.innerHTML = `
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <div>
+          <a class="name-link" href="#">${p.nombre}</a>
+          <p><b>${p.ciudad.replace("Seccional ", "")}</b></p>
+          <p><b>Título:</b> ${p.categoria}</p>
+          <p><b>Dependencia:</b> ${p.dependencia}</p>
+          <p><b>Tel:</b> ${p.telefono}</p>
+          <p>${p.correo}</p>
+        </div>
+      `;
 
-  resultsEl.innerHTML = "";
-  counterEl.textContent = `Mostrando ${list.length} personas`;
-
-  if (list.length === 0) {
-    resultsEl.innerHTML = `<p style="color:#6b7280;">No hay resultados.</p>`;
-    return;
-  }
-
-  list.forEach((p) => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}">
-      <div>
-        <a class="name-link" href="#">${p.nombre}</a>
-        <p><b>${p.ciudad.replace("Seccional ", "")}</b></p>
-        <p><b>Título:</b> ${p.categoria}</p>
-        <p><b>Dependencia:</b> ${p.dependencia}</p>
-        <p><b>Tel:</b> ${p.telefono}</p>
-        <p>${p.correo}</p>
-      </div>
-    `;
-
-    const link = card.querySelector(".name-link");
-    if (link) {
+      const link = card.querySelector(".name-link");
       link.addEventListener("click", (e) => {
         e.preventDefault();
         openModal(p);
       });
-    }
 
-    resultsEl.appendChild(card);
+      resultsEl.appendChild(card);
+    });
+  }
+
+  function applyFilters() {
+    const text = searchInput.value.trim().toLowerCase();
+    const subcat = subcatSelect.value;
+    const city = citySelect.value;
+
+    const filtered = people.filter((p) => {
+      const okText =
+        text === "" ||
+        p.nombre.toLowerCase().includes(text) ||
+        p.correo.toLowerCase().includes(text) ||
+        p.dependencia.toLowerCase().includes(text);
+
+      const okSub = subcat === "Todas" || p.categoria === subcat;
+      const okCity = city === "Todas las Seccionales" || p.ciudad === city;
+      const okLetter =
+        selectedLetter === "" || p.nombre.toUpperCase().startsWith(selectedLetter);
+
+      return okText && okSub && okCity && okLetter;
+    });
+
+    render(filtered);
+  }
+
+  btnSearch.addEventListener("click", applyFilters);
+  btnReset.addEventListener("click", () => {
+    searchInput.value = "";
+    subcatSelect.value = "Todas";
+    citySelect.value = "Todas las Seccionales";
+    selectedLetter = "";
+
+    document.querySelectorAll(".alphabet a").forEach((x) => x.classList.remove("active"));
+    render(people);
   });
-}
 
-/* ===== FILTROS ===== */
-function applyFilters() {
-  const text = (searchInput?.value || "").trim().toLowerCase();
-  const subcat = subcatSelect?.value || "Todas";
-  const city = citySelect?.value || "Todas las Seccionales";
-
-  const filtered = people.filter((p) => {
-    const okText =
-      text === "" ||
-      p.nombre.toLowerCase().includes(text) ||
-      p.correo.toLowerCase().includes(text) ||
-      p.dependencia.toLowerCase().includes(text);
-
-    const okSub = subcat === "Todas" || p.categoria === subcat;
-    const okCity = city === "Todas las Seccionales" || p.ciudad === city;
-    const okLetter =
-      selectedLetter === "" || p.nombre.toUpperCase().startsWith(selectedLetter);
-
-    return okText && okSub && okCity && okLetter;
-  });
-
-  render(filtered);
-}
-
-/* eventos */
-if (btnSearch) btnSearch.addEventListener("click", applyFilters);
-if (searchInput) {
   searchInput.addEventListener("input", applyFilters);
   searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") applyFilters();
   });
-}
-if (subcatSelect) subcatSelect.addEventListener("change", applyFilters);
-if (citySelect) citySelect.addEventListener("change", applyFilters);
 
-document.querySelectorAll(".alphabet a").forEach((a) => {
-  a.addEventListener("click", (e) => {
-    e.preventDefault();
-    selectedLetter = a.textContent.trim();
+  subcatSelect.addEventListener("change", applyFilters);
+  citySelect.addEventListener("change", applyFilters);
 
-    document.querySelectorAll(".alphabet a").forEach((x) => x.classList.remove("active"));
-    a.classList.add("active");
+  document.querySelectorAll(".alphabet a").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      selectedLetter = a.textContent.trim();
 
-    applyFilters();
+      document.querySelectorAll(".alphabet a").forEach((x) => x.classList.remove("active"));
+      a.classList.add("active");
+
+      applyFilters();
+    });
   });
+
+  modalClose.addEventListener("click", closeModal);
+  modalOk.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  render(people);
 });
-
-if (btnReset) {
-  btnReset.addEventListener("click", () => {
-    if (searchInput) searchInput.value = "";
-    if (subcatSelect) subcatSelect.value = "Todas";
-    if (citySelect) citySelect.value = "Todas las Seccionales";
-    selectedLetter = "";
-
-    document.querySelectorAll(".alphabet a").forEach((x) => x.classList.remove("active"));
-
-    render(people);
-  });
-}
-
-/* init */
-render(people);
